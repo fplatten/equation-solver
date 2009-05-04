@@ -3,4 +3,48 @@
   <groupId>com.showyourwork.engine</groupId>
   <artifactId>equation-solver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <build>
+    <finalName>equation-solver</finalName>
+<extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ftp</artifactId>
+        <version>1.0-beta-1</version>
+      </extension>
+    </extensions>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.0.2</version>
+        <configuration>
+          <warSourceExcludes>**/.copyarea.db</warSourceExcludes>
+        </configuration>
+      </plugin>
+      </plugins>
+  </build>  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>    
+    <dependency>
+      <groupId>org.jscience</groupId>
+      <artifactId>jscience</artifactId>
+      <version>4.3</version>
+      <scope>compile</scope>
+    </dependency>     
+  </dependencies>
+  
+  
 </project>
