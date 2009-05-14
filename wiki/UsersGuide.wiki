@@ -6,13 +6,13 @@ Quick Start Guide to using equation-solver.  The examples listed below are from 
 
 The examples below include parsing the following examples:
 
-  *Equations with implied multiplication.
-  *Equations of polynomial fractions.
-  *Equation which include standard fractions.
-  *Solving Quadratic Equations.
-  *Code example for finding the slope of an equation.
-  *Code example for finding the X and Y intercept of an equation.
-  *Code example for finding the first and second derivatives of an equataion.
+  * Equations with implied multiplication.
+  * Equations of polynomial fractions.
+  * Equation which include standard fractions.
+  * Solving Quadratic Equations.
+  * Code example for finding the slope of an equation.
+  * Code example for finding the X and Y intercept of an equation.
+  * Code example for finding the first and second derivatives of an equataion.
 
 
 = Details =
