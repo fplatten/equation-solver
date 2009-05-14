@@ -15,7 +15,7 @@ The examples below include parsing the following examples:
   * Code example for finding the first and second derivatives of an equataion.
 
 
-= Details =
+== Details ==
 
 Equations can be entered with all operations or without as the parser will insert implied multiplication operators.
 
