@@ -17,20 +17,32 @@ The examples below include parsing the following examples:
 
 == Details ==
 
+=== Equations with implied multiplication ===
+
 Equations can be entered with all operations or without as the parser will insert implied multiplication operators.
 
-*Without implied multiplication operators:*
+Without implied multiplication operators:
 {{{
 (x-3)(x+5)-(x+2)(x-4) = 2x-5(x+4)
 }}}
 
-*Is converted to:*
+Is converted to:
 {{{
 (x-3)*(x+5)-1*(x+2)*(x-4) = 2*x-5*(x+4)
 }}}
 
 
-*Entering polynomial fractions:*
+=== Equations of polynomial fractions ===
+
+use standard division and surround the polynomial fraction in parentheses:
 {{{
 ((4x + 3) / 5) - ((x + 4) / 3) - ((2x - 1) / 15) = 2
+}}}
+
+
+=== Equation which include standard fractions ===
+
+fractions are placed in square brackets:
+{{{
+[-1/2] - [1/2]
 }}}
