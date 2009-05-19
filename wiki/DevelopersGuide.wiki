@@ -1,0 +1,10 @@
+#summary Quick guide to building the project
+
+= Introduction =
+
+The Equation Solver is an eclipse project that uses the Maven plugin.
+
+
+= Details =
+
+More details to follow.
