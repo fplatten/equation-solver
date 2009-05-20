@@ -31,8 +31,6 @@ public class Integrator {
 		
 		Rational value = oneHalf.times(dx).times(s1.plus(e1));
 		
-		System.out.println(value.doubleValue());
-		
 		for (int i = 0; i < maxIter; ++i) {
 			sum = Rational.ZERO;
 			scale = oneHalf.pow(i + 1);
@@ -62,7 +60,7 @@ public class Integrator {
 		Equation e = b.build();
 		Rational three = Rational.valueOf("3/1");		
 		
-		Rational result = Integrator.trapezoidal(e, Rational.ZERO, three, 1.0e-4, "u");
+		Rational result = Integrator.trapezoidal(e, Rational.ZERO, three, 1.0, "u");
 		
 		System.out.println(result.doubleValue());
 		
