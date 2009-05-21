@@ -1,14 +1,15 @@
 #summary Quick guide to building the project
 
-= Introduction =
+== Introduction ==
 
 The Equation Solver is an eclipse project that uses the Maven plugin.
 
 
-= Building Equation Solver =
+
+== Building Equation Solver ==
 
 
-== Adding JScience to your local maven repo ==
+=== Adding JScience to your local maven repo ===
 
 I didn't see JScience in the maven v2 central repository so I went ahead and added it to my local repo manually.
 
