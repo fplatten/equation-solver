@@ -5,10 +5,10 @@ import junit.framework.TestCase;
 import org.jscience.mathematics.number.Rational;
 
 import com.showyourwork.engine.Coordinate;
-import com.showyourwork.engine.Derivative;
 import com.showyourwork.engine.Equation;
 import com.showyourwork.engine.EquationBuilder;
 import com.showyourwork.engine.EquationParser;
+import com.showyourwork.engine.calculus.Differentiator;
 
 public class ParserTest extends TestCase{
 	
@@ -89,7 +89,7 @@ public class ParserTest extends TestCase{
 		Coordinate sub2 = new Coordinate(Rational.valueOf("-1/1"),Rational.valueOf("-2/1"));
 		
 		
-		Rational slope = Derivative.findSlope(sub1, sub2);
+		Rational slope = Differentiator.findSlope(sub1, sub2);
 		
 		assertTrue(slope.equals(Rational.valueOf("-1/1")));
 		
@@ -105,7 +105,7 @@ public class ParserTest extends TestCase{
 		Rational x  = Rational.valueOf("-3/1");
 		
 		
-		Rational b = Derivative.findYIntercept( x, y, m);
+		Rational b = Differentiator.findYIntercept( x, y, m);
 		
 		//assertTrue(b.equals(Rational.valueOf("-20/9")));
 		assertTrue(b.equals(Rational.valueOf("10/1")));
@@ -119,7 +119,7 @@ public class ParserTest extends TestCase{
 		Rational m  = Rational.valueOf("2/1");
 		Rational b  = Rational.valueOf("10/1");
 		
-		Rational x = Derivative.findXIntercept( b, m);
+		Rational x = Differentiator.findXIntercept( b, m);
 		
 		//assertTrue(x.equals(Rational.valueOf("10/1")));
 		assertTrue(x.equals(Rational.valueOf("-5/1")));
