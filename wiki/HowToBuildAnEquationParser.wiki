@@ -1,0 +1,56 @@
+#Quick overview of the steps involved in writing an equation parser. 
+
+===How to build an equation parser===
+
+I've noticed Google directing people to my site when they search for "how to build an equation parser" so here's a basic overview on the stepes involved with building your own equation parser.  My purpose is to list the major steps involved and introduce the terminology you will need as you do more detailed searching on the web.
+
+An equation:
+
+"3*x^2 - 5*x = 0"
+
+The first step is to convert these characters into "tokens".  This process is called [http://en.wikipedia.org/wiki/Lexical_analysis lexing] and is done using a process called parsing.  The standard way to do this is to write a program that parses the equation using regular expressions.  
+
+So, to find all numbers in an equation string you would scan the text using the regular expression "([0-9]+)"  Every time your scanner gets a hit, it creates a token object for that group of number characters.
+
+The finished token list is just a map of name/value and looks like this:
+
+[NUMBER]   = [3]
+[MULTIPLY] = [*]
+[VARIABLE] = [x]
+[EXPONENT] = [^]
+[NUMBER]   = [2]
+[MINUS]    = [-]
+[NUMBER]   = [5]
+[MULTIPLY] = [*]
+[VARIABLE] = [x]
+[EQUAL]    = [=]
+[NUMBER]   = [0]
+
+If you don't want to write this code yourself, [http://jflex.de/ JFlex] seems to be the parser/lexer that the cool kids are using today in their compiler classes.
+
+The next step is to take this token list and build an executable equation.  To do this you're going to have to familiarize yourself with a couple data structures, an algorithm and a programming concept.
+
+The data structures:
+
+Stack
+Binary Tree
+
+Algorithm:
+
+InfixToPostfix
+
+
+Concept:
+
+Recursion.
+
+
+Two second explanation:
+
+Use the InfixToPostFix algorithm to take your token list and populate the stack object according to the operator presedence.  A stack is a FILO(first in last out) data structure.
+
+As the InfixToPostFix algorithm is pushing tokens onto the stack convert the token objects to Binary Node objects that are then populated into your Binary Tree.  This is also called a "parse tree".
+
+With the equation converted into a binary tree you're ready to "recurse the tree".  As you recursively traverse the tree and hit operators, grab the right and left nodes of the operators and execute the operation.
+
+If you also don't want to write this code yourself, use [http://www2.cs.tum.edu/projects/cup/ CUP]. 
