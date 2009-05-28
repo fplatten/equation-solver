@@ -1,4 +1,4 @@
-Quick overview of the steps involved in writing an equation parser. 
+#summary Quick overview of the steps involved in writing an equation parser.
 
 ===How to build an equation parser===
 
