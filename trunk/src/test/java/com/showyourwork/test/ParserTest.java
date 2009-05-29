@@ -125,4 +125,36 @@ public class ParserTest extends TestCase{
 		assertTrue(x.equals(Rational.valueOf("-5/1")));
 		
 	}
+	public void testInitialMinusX(){
+		
+		System.out.println("testInitialMinusX");
+		
+		String line = "-x +2 = 5";
+		
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();		
+		e.evaluate();
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("-3/1")));
+				
+	}
+	public void testXOnRightSide(){
+		
+		System.out.println("testXOnRightSide");
+		
+		String line = "-2 = 15 + x";
+		
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();		
+		e.evaluate();
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("-17/1")));
+		
+	}
 }
