@@ -181,7 +181,15 @@ public List<Token> insertMultipliers(List<Token> list) {
 			
 			if (t.getName().equals("MINUS")) {
 				
-				if(prev.isOperator() || prev.getName().equals("OPENPAREN")){
+				if(prev == null){
+					
+					Token zt = new Token();
+					zt.setValue("0");
+					zt.setName("NUMBER");					
+					withUrnaries.add(zt);
+					
+				}				
+				else if(prev.isOperator() || prev.getName().equals("OPENPAREN")){
 					t = it.next();
 					t.setValue("-" + t.getValue());
 				}
