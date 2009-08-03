@@ -70,25 +70,29 @@ public class Equation {
 		
 		if(getVariables().get("x") != null){
 			for (int i = 25; i >= -25; --i) {
-				getVariables().get("x").set(Rational.valueOf(i, 1));
-				//System.out.println("x = " + i +    "  sumLeft = " + sumLeft.evaluate().doubleValue() + "  sumRight = " + sumRight.evaluate().doubleValue());
-				
-				if (sumLeft.evaluate().equals(sumRight.evaluate())){
-					System.out.println("int x = " + i);
-					answers.add(Rational.valueOf(i + "/1"));
-				}
-					
-				
-				for (Rational f : EquationConstants.fractions) {				
-					//System.out.println("x = " + Rational.valueOf(i + "/1").plus(f));
-					getVariables().get("x").set(Rational.valueOf(i + "/1").plus(f));
-					//System.out.println("x = " + Rational.valueOf(i + "/1").plus(f) +    "  sumLeft = " + sumLeft.evaluate().doubleValue() + "  sumRight = " + sumRight.evaluate().doubleValue());
+				try {
+					getVariables().get("x").set(Rational.valueOf(i, 1));
+					//System.out.println("x = " + i +    "  sumLeft = " + sumLeft.evaluate().doubleValue() + "  sumRight = " + sumRight.evaluate().doubleValue());
 					
 					if (sumLeft.evaluate().equals(sumRight.evaluate())){
-						System.out.println("x = " + Rational.valueOf(i + "/1").plus(f));
-						answers.add(Rational.valueOf(i + "/1").plus(f));
+						System.out.println("int x = " + i);
+						answers.add(Rational.valueOf(i + "/1"));
 					}
 						
+					
+					for (Rational f : EquationConstants.fractions) {				
+						//System.out.println("x = " + Rational.valueOf(i + "/1").plus(f));
+						getVariables().get("x").set(Rational.valueOf(i + "/1").plus(f));
+						//System.out.println("x = " + Rational.valueOf(i + "/1").plus(f) +    "  sumLeft = " + sumLeft.evaluate().doubleValue() + "  sumRight = " + sumRight.evaluate().doubleValue());
+						
+						if (sumLeft.evaluate().equals(sumRight.evaluate())){
+							System.out.println("x = " + Rational.valueOf(i + "/1").plus(f));
+							answers.add(Rational.valueOf(i + "/1").plus(f));
+						}
+							
+					}
+				} catch (Exception e) {
+					// catching the divide by zero exception when looking to solve: 20 / x = 5
 				}
 				
 				
