@@ -157,4 +157,20 @@ public class ParserTest extends TestCase{
 		assertTrue(e.getAnswers().contains(Rational.valueOf("-17/1")));
 		
 	}
+	public void testXAsDenominator(){
+		
+		System.out.println("testXAsDenominator");
+		
+		String line = "20 / x = 4";
+		
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();		
+		e.evaluate();
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("5/1")));
+		
+	}
 }
