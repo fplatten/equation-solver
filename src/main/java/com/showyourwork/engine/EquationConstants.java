@@ -35,5 +35,21 @@ public class EquationConstants {
 			}
 		}
 	}
+	
+	public static String transpose(String operation){		
+		
+		char opchar = operation.charAt(0);
+		
+		switch (opchar) {
+		
+			case '+' : return "-";
+			case '-' : return "+";
+			case '*' : return "/";
+			case '/' : return "*";
+		
+		}
+		
+		return null;
+	}
 
 }
