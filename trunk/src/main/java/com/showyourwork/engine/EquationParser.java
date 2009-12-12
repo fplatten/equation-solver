@@ -119,7 +119,7 @@ public List<Token> insertMultipliers(List<Token> list) {
 	for (Token t : list) {
 
 		if (t.getName().equals("VARIABLE")) {
-			if (prev != null && !prev.getName().equals("OPENPAREN") && !prev.isOperator()) {
+			if (prev != null && !prev.getName().equals("OPENPAREN") && !prev.isOperator() && !prev.getName().equals("EQUAL")) {
 				Token nt = new Token();
 				nt.setValue("*");
 				nt.setName("MULTIPLY");
