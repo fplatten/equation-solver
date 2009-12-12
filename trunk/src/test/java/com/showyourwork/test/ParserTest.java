@@ -173,4 +173,25 @@ public class ParserTest extends TestCase{
 		assertTrue(e.getAnswers().contains(Rational.valueOf("5/1")));
 		
 	}
+	public void testBingAdvertEquation(){
+		
+		System.out.println("testBingAdvertEquation");
+		
+		//String line = "(1/x) + 4 = 0";
+		//String line = "x-(3/x)-1 = [-1/4]-(4/[-1/4])-5";
+		//String line = "[-1/4] - (3/[-1/4]) - 1";
+		//String line = "[-1/4]-(4/[-1/4])-5";
+		String line = "x-(3/x)-1=x-(4/x)-5";
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();		
+		e.evaluate();
+				
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("-1/4")));
+		
+		
+	}
 }
