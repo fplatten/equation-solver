@@ -1,6 +1,6 @@
-#summary Equation Solver 0.0.2 Release Notes
+#summary Equation Solver 0.0.3 Release Notes
 
-===Equation Solver 0.0.2 Release Notes===
+===Equation Solver 0.0.3 Release Notes===
 
 Add your content here.
 
