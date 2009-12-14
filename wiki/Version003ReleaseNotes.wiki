@@ -1,0 +1,12 @@
+#Equation Solver 0.0.3 Release Notes
+
+= 0.0.3 Release Notes =
+
+Add your content here.
+
+= Details =
+
+Fixed a couple of issues.  The main error fixed was with the EquationParser method that inserts the implied multipliers.  The fixed bug caused a multiplier to be inserted when the equals sign precedes a variable.  This caused the solve for X solver to fail.
+
+
+an example:  x-(3/x)-1=x-(4/x)-5 which should evaluate to x = -1/4
