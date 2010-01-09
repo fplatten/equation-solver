@@ -25,6 +25,7 @@ public class SolveForXEquationBuilder  {
 		
 		Equation e = parseEquation(tokens);
 		
+		
 		InfixToPostfixConverter itpLeft = new InfixToPostfixConverter(e.getLeftSide());
 		BinaryTree<String> btLeft = convertListToTree(itpLeft.convertToPostFix());
 		
