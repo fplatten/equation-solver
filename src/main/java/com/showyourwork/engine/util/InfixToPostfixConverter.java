@@ -51,7 +51,7 @@ public class InfixToPostfixConverter {
 					precedence = getPrecedence(t.getValue());
 					processOperator(t, precedence);
 					/*
-					 * pop ops from stack with equal or higher presedence 
+					 * pop ops from stack with equal or higher precedence 
 					 * and append to postfix
 					 */
 
