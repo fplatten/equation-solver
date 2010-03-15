@@ -1,5 +1,6 @@
 package com.showyourwork.engine.calculus;
 
+import org.jscience.mathematics.function.Function;
 import org.jscience.mathematics.function.Polynomial;
 import org.jscience.mathematics.function.Variable;
 import org.jscience.mathematics.number.Rational;
@@ -28,7 +29,7 @@ public class Differentiator {
 
 		return r1.minus(r2).divide(h);
 
-	}
+	}	
 	public static Rational getSecondDerivative(Equation e, Rational x, String var) {
 
 		e.getVariables().get(var).set(x);
@@ -90,7 +91,9 @@ public class Differentiator {
 
 	public static Rational findYIntercept(Rational x, Rational y, Rational m) {
 
-		String line = "mx + b = 0 + y";
+		//String line = "mx + b = 0 + y";
+		
+		String line = "m * x + y";
 
 		EquationBuilder b = new EquationBuilder();
 		new EquationParser(b).parse(line);
@@ -98,29 +101,30 @@ public class Differentiator {
 		Equation e = b.build();
 
 		e.getVariables().get("x").set(x);
-		e.getVariables().get("y").set(y);
+		e.getVariables().get("y").set(y.opposite());
 		e.getVariables().get("m").set(m);
 
-		e.evaluate("b");
-
-		return e.getAnswers().iterator().next();
+		return e.getSumLeft().evaluate().opposite();
 
 	}
 
-	public static Rational findXIntercept(Rational b, Rational m) {
+public static Rational findXIntercept(Rational b, Rational m) {
+		
+		//b = Y intercept
+		//m = slope
+		
 
-		String line = "mx + b = 0 + 0";
+		String line = "b / m";
 
 		EquationBuilder eb = new EquationBuilder();
 		new EquationParser(eb).parse(line);
 
 		Equation e = eb.build();
 
-		e.getVariables().get("b").set(b);
+		e.getVariables().get("b").set(b.opposite());
 		e.getVariables().get("m").set(m);
 
-		e.evaluate();
-
-		return e.getAnswers().iterator().next();
-	}	
+		
+		return e.getSumLeft().evaluate();
+	}
 }
