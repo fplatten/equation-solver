@@ -194,4 +194,56 @@ public class ParserTest extends TestCase{
 		
 		
 	}
+	public void NotestImpliedZeroRightSideEquation(){
+		
+		System.out.println("testImpliedZeroRightSideEquation");
+		
+		String line = "5x -10 -6x -15";
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();		
+		e.evaluate();
+				
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("-25/1")));
+		
+		
+		
+		
+	}
+	public void testFunctionEquation(){
+		
+		System.out.println("testFunctionEquation");		
+		
+		String line = "(-1)^2 -2(-1) + 3";
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();		
+		e.evaluate();
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("6/1")));
+		
+		
+	}
+	public void NotestFunctionEquationWithThree(){
+		
+		System.out.println("testFunctionEquationWithThree");		
+		
+		String line = "x^2 -2x + 3";
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();
+		
+		e.evaluate();
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("6/1")));
+		
+		
+	}
 }
