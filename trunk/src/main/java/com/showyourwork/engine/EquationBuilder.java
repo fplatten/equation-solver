@@ -31,6 +31,11 @@ public class EquationBuilder {
 		Function<Rational, Rational> sumLeft = build(btLeft.getRoot());
 		
 		Function<Rational, Rational> sumRight = null;
+		
+//		if(e.getRightSide().size() == 0 && variables.size() > 0){
+//			e.setRightSide(appendImpliedZero(e.getRightSide()));
+//		}
+		
 		if(e.getRightSide().size() == 1){
 			e.setRightSide(appendEquation(e.getRightSide()));
 		}
@@ -190,6 +195,24 @@ public class EquationBuilder {
 		return operator;
 	}
 	public List<Token> appendEquation(List<Token> list) {
+		
+		List<Token> basicEquation = new ArrayList<Token>();
+		
+		basicEquation.add(list.get(0));		
+		
+		Token nt = new Token();
+		nt.setValue("+");
+		nt.setName("PLUS");
+		basicEquation.add(nt);
+		
+		Token nt2 = new Token();
+		nt2.setValue("0");
+		nt2.setName("NUMBER");
+		basicEquation.add(nt2);		
+		
+		return basicEquation;
+	}
+	public List<Token> NoappendImpliedZero(List<Token> list) {
 		
 		List<Token> basicEquation = new ArrayList<Token>();
 		

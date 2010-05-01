@@ -12,7 +12,9 @@ import org.jscience.mathematics.function.Polynomial;
 import org.jscience.mathematics.function.Variable;
 import org.jscience.mathematics.number.Rational;
 
-public class Equation {
+import com.showyourwork.engine.calculus.Differentiator;
+
+public class Equation implements Cloneable{
 	
 	private Map<String, Variable.Local<Rational>> variables = new HashMap<String, Variable.Local<Rational>>();
 	private Map<String, Polynomial<Rational>> values = new HashMap<String, Polynomial<Rational>>();
@@ -20,6 +22,7 @@ public class Equation {
 	private List<Token> rightSide = new ArrayList<Token>();
 	Function<Rational, Rational> sumRight;
 	Function<Rational, Rational> sumLeft;
+	Function<Rational, Rational> leftRightTransposed;
 	Set<Rational> answers = new HashSet<Rational>();
 	
 	public Function<Rational, Rational> getSumRight() {
@@ -33,6 +36,13 @@ public class Equation {
 	}
 	public void setSumLeft(Function<Rational, Rational> sumLeft) {
 		this.sumLeft = sumLeft;
+	}	
+	public Function<Rational, Rational> getLeftRightTransposed() {
+		return leftRightTransposed;
+	}
+	public void setLeftRightTransposed(
+			Function<Rational, Rational> leftRightTransposed) {
+		this.leftRightTransposed = leftRightTransposed;
 	}
 	public List<Token> getLeftSide() {
 		return leftSide;
@@ -111,6 +121,40 @@ public class Equation {
 		}
 		
 	}
+	public Rational evaluateUsingNewtonsMethod(Rational x){
+			
+		
+		getVariables().get("x").set(x);
+		Rational y = getSumLeft().evaluate();
+		
+		Rational m = Differentiator.getFirstDerivative(this , x, "x");
+		
+		Rational b = Differentiator.findYIntercept(x,y,m);
+		Rational xint = Differentiator.findXIntercept(b, m);
+		
+		return xint;
+		
+	}	
+	
+	public void evaluateUsingNewtonsMethod(){
+		
+		//starting point
+		Rational max = Rational.valueOf("100/1");
+		Rational min = Rational.valueOf("-100/1");		
+		int maxIter = 20;
+		setSumLeft(getSumLeft().minus(getSumRight()));
+		Rational result = max;
+		Rational tolerance = Rational.valueOf("1/1"); 
+		
+		for (int i = 0; i < maxIter; ++i) {
+			
+			result = evaluateUsingNewtonsMethod(result);			
+			System.out.println(result);			
+		}
+		
+		
+		
+	}
 	public void evaluate(String var){
 		
 		if(getVariables().get(var) != null){
@@ -146,6 +190,21 @@ public class Equation {
 		}
 		
 	}
+	public Object clone(){
+		
+		try {
+			super.clone();
+			
+			
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		return this;
+		
+	}
+	
 	
 	
 }
