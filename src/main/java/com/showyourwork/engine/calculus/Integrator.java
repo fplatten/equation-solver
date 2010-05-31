@@ -32,7 +32,10 @@ public class Integrator {
 		for (int i = 0; i < maxIter; ++i) {
 			sum = Rational.ZERO;
 			scale = oneHalf.pow(i + 1);
-			for (int j = 0; j < Math.pow(2, i); ++j) {
+
+			System.out.println("Math.pow(2, i) = " + Math.pow(2, i));
+
+			for (int j = 0; j < 16; ++j) {
 
 				e.getVariables().get(var).set(
 						start.plus(
@@ -40,6 +43,8 @@ public class Integrator {
 										Rational.valueOf(j + "/1")).plus(one)))
 								.times(dx));
 				sum = sum.plus(e.getSumLeft().evaluate());
+
+				// System.out.println("sum = " + sum);
 
 			}
 
@@ -60,11 +65,12 @@ public class Integrator {
 
 		return null;
 	}
-
-	public static Rational simpson(Rational lo, Rational hi, Rational n, Equation e, String var) {
+	public static Rational simpson(Rational lo, Rational hi, Rational n,
+			Equation e, String var) {
 		// Check data.
 		// Integrate the function between lo and hi with n slices.
-		if (hi.floatValue() <= lo.floatValue() || n.intValue() <= 0 || e == null)
+		if (hi.floatValue() <= lo.floatValue() || n.intValue() <= 0
+				|| e == null)
 			return Rational.ZERO;
 
 		Rational dx = (hi.minus(lo)).divide(n);
@@ -78,52 +84,131 @@ public class Integrator {
 		Rational x_md = lo.plus(dx);
 		Rational x_hi = lo.plus(two).times(dx);
 
-		for (int i = 0; i < n.intValue(); i++) {			
-			
+		for (int i = 0; i < n.intValue(); i++) {
+
 			e.getVariables().get(var).set(x_lo);
 			Rational left_side = e.getSumLeft().evaluate();
-			
+
 			e.getVariables().get(var).set(x_md);
 			Rational middle = e.getSumLeft().evaluate();
-			
+
 			e.getVariables().get(var).set(x_hi);
-			Rational rite_side = e.getSumLeft().evaluate();			
-			
-			//area += dx * (left_side + 4.0 * middle + rite_side) / 3.0;
-			area = area.plus(dx.times((left_side.plus(four).times(middle).plus(rite_side))).divide(three));
-			
-						
-			x_lo = lo.plus(two).times(Rational.valueOf("" + i + "/1")).times(dx);
+			Rational rite_side = e.getSumLeft().evaluate();
+
+			// area += dx * (left_side + 4.0 * middle + rite_side) / 3.0;
+			area = area.plus(dx.times(((left_side.plus(four).times(middle)
+					.plus(rite_side))).divide(three)));
+
+			x_lo = lo.plus(two).times(Rational.valueOf("" + i + "/1"))
+					.times(dx);
 			x_md = x_lo.plus(dx);
-			x_hi = x_lo.plus(two).times(dx);			
-			
+			x_hi = x_lo.plus(two).times(dx);
+
 		}
 
 		return area;
 	} // integrate
 
-	public static void main(String[] args) {
+	
 
-		String line = "u^2 + 1";
+	public static Rational averageOrdinateMethod(Equation e, Rational lo,
+			Rational hi, Rational n, String var) {
 
-		EquationBuilder b = new EquationBuilder();
-		new EquationParser(b).parse(line);
-		Equation e = b.build();
-		Rational three = Rational.valueOf("3/1");
+		Rational dx = (hi.minus(lo)).divide(n);
+		Rational sum = Rational.ZERO;
+		Rational step = lo;
 
-		Rational result = Integrator.trapezoidal(e, Rational.ZERO, three, 1.0,
-				"u");
+		for (int i = 0; i <= n.intValue(); i++) {
 
-		System.out.println(result.doubleValue());
-		
-		
-		Rational twenty = Rational.valueOf("20/1");		
-		//simpson(Rational lo, Rational hi, Rational n, Equation e, String var)
-		result = Integrator.simpson(Rational.ZERO, three, twenty, e, "u");
-		
-		System.out.println(result.doubleValue());
-		
-		
+			e.getVariables().get(var).set(step);
+			Rational ordPoint = e.getSumLeft().evaluate();
+
+			sum = sum.plus(ordPoint);
+			step = step.plus(dx);
+
+		}
+
+		return (sum.divide(n)).times(hi.minus(lo));
+
+	}
+
+	public static Rational trapezoidalEqualSpacingMethod(Equation e,
+			Rational lo, Rational hi, Rational n, String var) {
+
+		Rational dx = (hi.minus(lo)).divide(n);
+		Rational oneHalf = Rational.valueOf("1/2");
+		Rational sum = Rational.ZERO;
+		Rational step = lo;
+		Rational yZero = Rational.ZERO;
+		Rational yN = Rational.ZERO;
+
+		for (int i = 0; i <= n.intValue(); i++) {
+
+			e.getVariables().get(var).set(step);
+			yN = e.getSumLeft().evaluate();
+			System.out.println("i = " + i + "  -- " + yN.floatValue());
+
+			if (i == 0)
+				yZero = yN;
+			else {
+				sum = sum.plus(yN);
+			}
+
+			step = step.plus(dx);
+
+		}
+
+		sum = sum.minus(yN);
+
+		Rational area = oneHalf.times(yZero.plus(yN)).plus(sum);
+
+		return area;
+	}
+
+	public static Rational trapezoidalUnequalSpacingMethod(Equation e,
+			Rational lo, Rational hi, Rational n, String var) {
+
+		Rational dx = (hi.minus(lo)).divide(n);
+		Rational oneHalf = Rational.valueOf("1/2");
+		Rational sum = Rational.ZERO;
+		Rational step = lo;
+		Rational yZero = Rational.ZERO;
+		Rational yN = Rational.ZERO;
+		Rational yPrev = Rational.ZERO;
+		Rational stepPrev = null;
+
+		for (int i = 0; i <= n.intValue(); i++) {
+
+			e.getVariables().get(var).set(step);
+			yN = e.getSumLeft().evaluate();
+			System.out.println("i = " + i + "  -- " + yN.floatValue());
+
+			if (i == 0)
+				yZero = yN;
+			else {
+
+				System.out.println("x1 - x0 = " + step.minus(stepPrev));
+				System.out.println("y1 - y0 = " + yN.plus(yPrev));
+
+				System.out.println(oneHalf.times(step.minus(stepPrev)).times(
+						yN.plus(yPrev)));
+
+				sum = sum.plus(oneHalf.times(step.minus(stepPrev)).times(
+						yN.plus(yPrev)));
+
+			}
+
+			stepPrev = step;
+			yPrev = yN;
+			step = step.plus(dx);
+
+		}
+
+		// sum = sum.minus(yN);
+
+		// Rational area = oneHalf.times(yZero.plus(yN)).plus(sum);
+
+		return sum;
 
 	}
 
