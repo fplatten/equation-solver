@@ -21,6 +21,8 @@ public class EquationConstants {
 	
 	public static final Set<Rational> fractions = new HashSet<Rational>();
 	
+	public static final Set<Rational> bigFractions = new HashSet<Rational>();
+	
 	static{
 		Rational fraction = Rational.ZERO;
 
@@ -31,6 +33,21 @@ public class EquationConstants {
 				fraction = Rational.valueOf("" + j + "/" + i);
 				if (!fractions.contains(fraction)) {
 					fractions.add(fraction);
+				}
+			}
+		}
+	}
+	
+	static{
+		Rational fraction = Rational.ZERO;
+
+		for (int i = 1; i <= 200; ++i) {
+
+			for (int j = 1; j < i; ++j) {
+
+				fraction = Rational.valueOf("" + j + "/" + i);
+				if (!bigFractions.contains(fraction)) {
+					bigFractions.add(fraction);
 				}
 			}
 		}
