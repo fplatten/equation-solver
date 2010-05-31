@@ -22,7 +22,16 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		e.evaluateUsingNewtonsMethod();
+		//e.evaluate();
+		
+		for(Rational r : e.getAnswers()){
+			
+			System.out.println("Anser = " + r.toString());			
+			
+		}
+		
+		
 		
         assertTrue(e.getAnswers().contains(Rational.valueOf("-13/7")));
     }
@@ -35,7 +44,8 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		//e.evaluate();
+		e.evaluateUsingNewtonsMethod();
 		
         assertTrue(e.getAnswers().contains(Rational.valueOf("8/1")));
     }
@@ -48,7 +58,8 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		//e.evaluate();
+		e.evaluateUsingNewtonsMethod();
 		
         assertTrue(e.getAnswers().contains(Rational.valueOf("-7/3")));
     }
@@ -62,7 +73,7 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		e.evaluate();		
 		
         assertTrue(e.getAnswers().contains(Rational.valueOf("-1/1")));
     }
@@ -76,7 +87,15 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		//e.evaluate();
+		e.evaluateUsingNewtonsMethod();
+		
+		for(Rational r : e.getAnswers()){
+			
+			System.out.println("Answer = " + r.toString());			
+			
+		}
+		
 		
         assertTrue(e.getAnswers().contains(Rational.valueOf("5/3")));
         assertTrue(e.getAnswers().contains(Rational.valueOf("0/1")));
@@ -136,7 +155,8 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		//e.evaluate();
+		e.evaluateUsingNewtonsMethod();
 		
 		assertTrue(e.getAnswers().contains(Rational.valueOf("-3/1")));
 				
@@ -152,7 +172,8 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		//e.evaluate();
+		e.evaluateUsingNewtonsMethod();
 		
 		assertTrue(e.getAnswers().contains(Rational.valueOf("-17/1")));
 		
@@ -168,7 +189,8 @@ public class ParserTest extends TestCase{
 		new EquationParser(b).parse(line);
 		
 		Equation e = b.build();		
-		e.evaluate();
+		//e.evaluate();
+		e.evaluateUsingNewtonsMethod();
 		
 		assertTrue(e.getAnswers().contains(Rational.valueOf("5/1")));
 		
@@ -186,9 +208,16 @@ public class ParserTest extends TestCase{
 		EquationBuilder b = new EquationBuilder();
 		new EquationParser(b).parse(line);
 		
-		Equation e = b.build();		
-		e.evaluate();
-				
+		Equation e = b.build();
+		
+		e.evaluateUsingNewtonsMethod();		
+		
+		if(e.getAnswers().size() == 0){			
+			
+			e = b.build();
+			e.evaluate();
+		}
+			
 		
 		assertTrue(e.getAnswers().contains(Rational.valueOf("-1/4")));
 		
@@ -229,20 +258,32 @@ public class ParserTest extends TestCase{
 		
 		
 	}
-	public void NotestFunctionEquationWithThree(){
+	public void testFunctionEquationWithThree(){
 		
 		System.out.println("testFunctionEquationWithThree");		
 		
-		String line = "x^2 -2x + 3";
+		String line = "x^2 -2x + 3 = 6";
 		
 		EquationBuilder b = new EquationBuilder();
 		new EquationParser(b).parse(line);
 		
-		Equation e = b.build();
+		Equation e = b.build();		
 		
-		e.evaluate();
+		e.evaluateUsingNewtonsMethod();		
 		
-		assertTrue(e.getAnswers().contains(Rational.valueOf("6/1")));
+		if(e.getAnswers().size() == 0){			
+			System.out.println("Let's try the long way");
+			e = b.build();
+			e.evaluate();
+		}
+		
+		for(Rational r : e.getAnswers()){
+			
+			System.out.println("Answer = " + r.toString());			
+			
+		}
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("-1/1")));
 		
 		
 	}
