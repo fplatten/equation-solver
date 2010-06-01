@@ -22,10 +22,10 @@ public class Differentiator {
 
 		e.getVariables().get(var).set(x.plus(h.divide(two)));
 
-		Rational r1 = e.getSumLeft().evaluate();
+		Rational r1 = e.getSumLeftRight().evaluate();
 
 		e.getVariables().get(var).set(x.minus(h.divide(two)));
-		Rational r2 = e.getSumLeft().evaluate();
+		Rational r2 = e.getSumLeftRight().evaluate();
 
 		return r1.minus(r2).divide(h);
 
@@ -33,13 +33,13 @@ public class Differentiator {
 	public static Rational getSecondDerivative(Equation e, Rational x, String var) {
 
 		e.getVariables().get(var).set(x);
-		Rational r1 = e.getSumLeft().evaluate();
+		Rational r1 = e.getSumLeftRight().evaluate();
 
 		e.getVariables().get(var).set(x.plus(h));
-		Rational r2 = e.getSumLeft().evaluate();
+		Rational r2 = e.getSumLeftRight().evaluate();
 
 		e.getVariables().get(var).set(x.minus(h));
-		Rational r3 = e.getSumLeft().evaluate();
+		Rational r3 = e.getSumLeftRight().evaluate();
 
 		Rational result = ((r2.minus(two.times(r1))).plus(r3)).divide(h).divide(h);
 		
@@ -104,7 +104,7 @@ public class Differentiator {
 		e.getVariables().get("y").set(y.opposite());
 		e.getVariables().get("m").set(m);
 
-		return e.getSumLeft().evaluate().opposite();
+		return e.getSumLeftRight().evaluate().opposite();
 
 	}
 
@@ -125,6 +125,6 @@ public static Rational findXIntercept(Rational b, Rational m) {
 		e.getVariables().get("m").set(m);
 
 		
-		return e.getSumLeft().evaluate();
+		return e.getSumLeftRight().evaluate();
 	}
 }
