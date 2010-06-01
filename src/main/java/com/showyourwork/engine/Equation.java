@@ -21,8 +21,10 @@ public class Equation implements Cloneable{
 	private Map<String, Polynomial<Rational>> values = new HashMap<String, Polynomial<Rational>>();
 	private List<Token> leftSide = new ArrayList<Token>();
 	private List<Token> rightSide = new ArrayList<Token>();
+	private String origEquation;
 	Function<Rational, Rational> sumRight;
 	Function<Rational, Rational> sumLeft;
+	Function<Rational, Rational> sumLeftRight;	
 	Function<Rational, Rational> leftRightTransposed;
 	Set<Rational> answers = new HashSet<Rational>();
 	boolean found = false;
@@ -78,6 +80,12 @@ public class Equation implements Cloneable{
 	
 	public void setAnswers(Set<Rational> answers) {
 		this.answers = answers;
+	}	
+	public Function<Rational, Rational> getSumLeftRight() {
+		return sumLeftRight;
+	}
+	public void setSumLeftRight(Function<Rational, Rational> sumLeftRight) {
+		this.sumLeftRight = sumLeftRight;
 	}
 	public void evaluate(){
 		
@@ -119,7 +127,7 @@ public class Equation implements Cloneable{
 			
 		}
 		else{
-			System.out.println("answer = " + sumLeft.evaluate());
+			//System.out.println("answer = " + sumLeft.evaluate());
 			answers.add(sumLeft.evaluate());
 		}
 		
@@ -128,7 +136,7 @@ public class Equation implements Cloneable{
 			
 		
 		getVariables().get("x").set(x);
-		Rational y = getSumLeft().evaluate();
+		Rational y = getSumLeftRight().evaluate();
 		//System.out.println("y  = " + y.floatValue() );
 		Rational m = Differentiator.getFirstDerivative(this , x, "x");
 		//System.out.println("slope = " + m.floatValue() );
@@ -142,7 +150,7 @@ public class Equation implements Cloneable{
 	public boolean isNewtonsMethodAvailable(Rational x){
 		
 		getVariables().get("x").set(x);
-		Rational y = getSumLeft().evaluate();
+		Rational y = getSumLeftRight().evaluate();
 		//System.out.println("y  = " + y.floatValue() );
 		Rational m = Differentiator.getFirstDerivative(this , x, "x");
 		//System.out.println("isNewtonsMethodAvailable slope = " + m.floatValue() );
@@ -152,19 +160,13 @@ public class Equation implements Cloneable{
 		
 		return true;		
 		
-	}	
-	public void evaluateUsingNewtonsMethod(){
-		
-		//starting point
-		Rational max = Rational.valueOf("1/1");
-		Rational min = Rational.valueOf("-1/1");		
-		int maxIter = 20;
-		setSumLeft(getSumLeft().minus(getSumRight()));
-		Rational result = min;
-		Rational prev = max;
-		Rational tolerance = Rational.ONE.valueOf("1/1");
+	}
+	public void evaluateUsingNewtonsMethod(Rational hi, Rational lo){		
+			
+		int maxIter = 20;		
+		Rational result = lo;
+		Rational prev = hi;		
 		found = false;		
-		
 		
 		for (int i = 0; i < maxIter; ++i) {			
 						
@@ -181,13 +183,14 @@ public class Equation implements Cloneable{
 			//System.out.println("result = " + result.toString() + " -- prev = " + prev.toString());
 			
 			
-			if(prev.equals(result)){
+			if(prev.equals(result) && verifyAnswer(result, "x")){
 				 i = maxIter;
 				 found = true;
+				 
 				 //System.out.println("FOUND AN ANSWER!!!!!!!!!!! = " + result);
 				 answers.add(result);
 			}
-			else if(NumberUtils.equals(prev.floatValue(), result.floatValue(), EPSILON)){
+			else if(NumberUtils.equals(prev.floatValue(), result.floatValue(), EPSILON) && verifyAnswer(result, "x")){
 				i = maxIter;
 				found = true;
 				result = NumberUtils.convertDecimalToRational(result.floatValue());
@@ -206,18 +209,10 @@ public class Equation implements Cloneable{
 			//System.out.println(result);			
 		}
 		
-		if(found)			
-			answers.add(result);
-		else{
-			//try brute force.
-		}
+		result = hi;
+		prev = lo;		
+		found = false;		
 		
-		result = max;
-		prev = min;
-		
-		found = false;
-		
-		//System.out.println("START FROM THE OTHER SIDE TO FIND MULTIPLE ANSWERS");	
 		
 		for (int i = 0; i < maxIter; ++i) {	
 			
@@ -235,12 +230,12 @@ public class Equation implements Cloneable{
 			//System.out.println("result = " + result.toString() + " -- prev = " + prev.toString());
 			
 			
-			if(prev.equals(result)){
+			if(prev.equals(result) && verifyAnswer(result, "x")){
 				 i = maxIter;
 				 found = true;
 				 answers.add(result);
 			}			
-			else if(NumberUtils.equals(prev.floatValue(), result.floatValue(), EPSILON)){	
+			else if(NumberUtils.equals(prev.floatValue(), result.floatValue(), EPSILON) && verifyAnswer(result, "x")){	
 				i = maxIter;
 				found = true;
 				result = NumberUtils.convertDecimalToRational(result.floatValue());
@@ -265,8 +260,33 @@ public class Equation implements Cloneable{
 //		}
 		
 		
+	}	
+	public void evaluateUsingNewtonsMethod(){
+		
+		
+		this.setSumLeftRight(getSumLeft().minus(getSumRight()));		
+		
+		evaluateUsingNewtonsMethod(Rational.valueOf("1/1"),Rational.valueOf("-1/1"));
+		evaluateUsingNewtonsMethod(Rational.valueOf("10/1"),Rational.valueOf("-10/1"));		
 		
 	}
+	public boolean verifyAnswer(Rational r, String var){
+		
+		getVariables().get(var).set(r);
+		//System.out.println("r = " + r);
+		//System.out.println("left = "+ sumLeft + " =  " +  sumLeft.evaluate().floatValue() +  " -- "  + sumLeft.evaluate());
+		//System.out.println("right = " +  sumRight  + " = "  + sumRight.evaluate());		
+		
+		
+		if (sumLeft.evaluate().equals(sumRight.evaluate())){			
+			return true;
+		}
+		else if(NumberUtils.equals(sumLeft.evaluate().floatValue(), sumRight.evaluate().floatValue(), EPSILON)){
+			return true;			
+		}
+		
+		return false;		
+	}	
 	public void evaluateUsingRange(Rational min, Rational max){		
 		
 		if(getVariables().get("x") != null){
@@ -308,15 +328,11 @@ public class Equation implements Cloneable{
 			
 		}
 		else{
-			System.out.println("answer = " + sumLeft.evaluate());
+			//System.out.println("answer = " + sumLeft.evaluate());
 			answers.add(sumLeft.evaluate());
 		}
 		
-		
-		
-		
-	}
-	
+	}	
 	
 	public void evaluate(String var){
 		
@@ -352,20 +368,6 @@ public class Equation implements Cloneable{
 			answers.add(sumLeft.evaluate());
 		}
 		
-	}
-	public Object clone(){
-		
-		try {
-			super.clone();
-			
-			
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		
-		return this;
-		
-	}
+	}	
 	
 }

@@ -28,7 +28,7 @@ public class EquationBuilder {
 		InfixToPostfixConverter itpLeft = new InfixToPostfixConverter(e.getLeftSide());
 		BinaryTree<String> btLeft = convertListToTree(itpLeft.convertToPostFix());
 		
-		Function<Rational, Rational> sumLeft = build(btLeft.getRoot());
+		Function<Rational, Rational> sumLeft = build(btLeft.getRoot());		
 		
 		Function<Rational, Rational> sumRight = null;
 		
@@ -49,6 +49,7 @@ public class EquationBuilder {
 		e.setValues(values);
 		e.setVariables(variables);
 		e.setSumLeft(sumLeft);
+		e.setSumLeftRight(sumLeft);
 		e.setSumRight(sumRight);		
 		
 		return e;

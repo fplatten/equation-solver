@@ -189,7 +189,7 @@ public List<Token> insertMultipliers(List<Token> list) {
 					withUrnaries.add(zt);
 					
 				}				
-				else if(prev.isOperator() || prev.getName().equals("OPENPAREN")){
+				else if(prev.isOperator() || prev.getName().equals("OPENPAREN") || prev.getName().equals("EQUAL") ){
 					t = it.next();
 					t.setValue("-" + t.getValue());
 				}
