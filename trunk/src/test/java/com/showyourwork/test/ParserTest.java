@@ -21,7 +21,12 @@ public class ParserTest extends TestCase{
 		EquationBuilder b = new EquationBuilder();
 		new EquationParser(b).parse(line);
 		
-		Equation e = b.build();		
+		Equation e = b.build();	
+		
+		System.out.println("left = "+ e.getSumLeft());
+		System.out.println("right = " +  e.getSumRight());
+		
+		
 		e.evaluateUsingNewtonsMethod();
 		//e.evaluate();
 		
@@ -77,8 +82,7 @@ public class ParserTest extends TestCase{
 		
         assertTrue(e.getAnswers().contains(Rational.valueOf("-1/1")));
     }
-	public void testQuadraticEquation()
-    {		
+	public void testQuadraticEquation(){		
 		
 		System.out.println("testQuadraticEquation");
 		String line = "3x ^2 - 5x = 0";
@@ -99,6 +103,31 @@ public class ParserTest extends TestCase{
 		
         assertTrue(e.getAnswers().contains(Rational.valueOf("5/3")));
         assertTrue(e.getAnswers().contains(Rational.valueOf("0/1")));
+    }
+	public void testAnotherQuadraticEquation(){		
+		
+		System.out.println("testAnotherQuadraticEquation");
+		String line = "x^2 - 5x = -6";
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();	
+		
+		System.out.println("left = "+ e.getSumLeft());
+		System.out.println("right = " +  e.getSumRight());		
+		
+		//e.evaluate();
+		e.evaluateUsingNewtonsMethod();
+		
+		for(Rational r : e.getAnswers()){
+			
+			System.out.println("Answer = " + r.toString());			
+			
+		}		
+		
+        assertTrue(e.getAnswers().contains(Rational.valueOf("2/1")));
+        assertTrue(e.getAnswers().contains(Rational.valueOf("3/1")));
     }
 	public void testFindSlope(){
 		
@@ -210,12 +239,18 @@ public class ParserTest extends TestCase{
 		
 		Equation e = b.build();
 		
-		e.evaluateUsingNewtonsMethod();		
+		e.evaluateUsingNewtonsMethod();	
 		
 		if(e.getAnswers().size() == 0){			
-			
+			System.out.println("GO LONG!!!!!!!!!!!!!");
 			e = b.build();
 			e.evaluate();
+		}
+		
+		for(Rational r : e.getAnswers()){
+			
+			System.out.println("Answer = " + r.toString());			
+			
 		}
 			
 		
@@ -287,4 +322,6 @@ public class ParserTest extends TestCase{
 		
 		
 	}
+	
+	
 }
