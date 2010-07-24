@@ -210,7 +210,7 @@ public class ParserTest extends TestCase{
 	public void testXAsDenominator(){
 		
 		System.out.println("testXAsDenominator");
-		
+				
 		String line = "20 / x = 4";
 		
 		
