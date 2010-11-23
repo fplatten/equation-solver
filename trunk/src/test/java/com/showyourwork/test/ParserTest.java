@@ -15,7 +15,7 @@ public class ParserTest extends TestCase{
 	
 	public void testParens()
     {		
-		System.out.println("testParens");
+		System.out.println("testParens implied multiplication");
 		String line = "(x-3)(x+5)-(x+2)(x-4) = 2x-5(x+4)";
 		
 		EquationBuilder b = new EquationBuilder();
