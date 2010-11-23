@@ -322,6 +322,25 @@ public class ParserTest extends TestCase{
 		
 		
 	}
+	public void testStandAloneXValues(){
+		
+		String line = "x=x+(1/2)*x";
+		
+		EquationBuilder b = new EquationBuilder();
+		new EquationParser(b).parse(line);
+		
+		Equation e = b.build();		
+		e.evaluate();
+			
+		
+		for(Rational r : e.getAnswers()){			
+			System.out.println("Answer = " + r.toString());			
+		}		
+		
+		assertTrue(e.getAnswers().contains(Rational.valueOf("0/1")));		
+		
+		
+	}
 	
 	
 }

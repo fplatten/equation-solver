@@ -25,8 +25,13 @@ public class EquationBuilder {
 		
 		Equation e = parseEquation(tokens);
 		
+		if(e.getLeftSide().size() == 1){
+			e.setLeftSide(appendEquation(e.getLeftSide()));
+		}
+		
 		InfixToPostfixConverter itpLeft = new InfixToPostfixConverter(e.getLeftSide());
-		BinaryTree<String> btLeft = convertListToTree(itpLeft.convertToPostFix());
+		BinaryTree<String> btLeft = convertListToTree(itpLeft.convertToPostFix());		
+		
 		
 		Function<Rational, Rational> sumLeft = build(btLeft.getRoot());		
 		
