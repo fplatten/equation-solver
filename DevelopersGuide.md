@@ -1,0 +1,22 @@
+## Introduction ##
+
+The Equation Solver is an eclipse project that uses the Maven plugin.
+
+
+
+## Building Equation Solver ##
+
+
+### Adding JScience to your local maven repo ###
+
+I didn't see JScience in the maven v2 central repository so I went ahead and added it to my local repo manually.
+
+Create the following directory structure in your local maven repo:
+```
+[User_Home].m2\repository\org\jscience\jscience\4.3
+```
+Copy the **jscience.jar** file to the **4.3** folder.
+
+Rename the jar file to **jscience-4.3.jar**
+
+Running **mvn package** should compile the code, run the junit tests and build the jar.

@@ -1,0 +1,46 @@
+# Introduction #
+
+Quick Start Guide to using equation-solver.  The examples listed below are from the com.showyourwork.test.ParserTest unit test.
+
+The examples below include parsing the following examples:
+
+  * Equations with implied multiplication.
+  * Equations of polynomial fractions.
+  * Equation which include standard fractions.
+  * Solving Quadratic Equations.
+  * Code example for finding the slope of an equation.
+  * Code example for finding the X and Y intercept of an equation.
+  * Code example for finding the first and second derivatives of an equataion.
+
+
+## Details ##
+
+### Equations with implied multiplication ###
+
+Equations can be entered with all operations or without as the parser will insert implied multiplication operators.
+
+Without implied multiplication operators:
+```
+(x-3)(x+5)-(x+2)(x-4) = 2x-5(x+4)
+```
+
+Is converted to:
+```
+(x-3)*(x+5)-1*(x+2)*(x-4) = 2*x-5*(x+4)
+```
+
+
+### Equations of polynomial fractions ###
+
+use standard division and surround the polynomial fraction in parentheses:
+```
+((4x + 3) / 5) - ((x + 4) / 3) - ((2x - 1) / 15) = 2
+```
+
+
+### Equation which include standard fractions ###
+
+fractions are placed in square brackets:
+```
+[-1/2] - [1/2]
+```
