@@ -32,7 +32,7 @@ public class ParserTest extends TestCase{
 		
 		for(Rational r : e.getAnswers()){
 			
-			System.out.println("Anser = " + r.toString());			
+			System.out.println("Answer = " + r.toString());
 			
 		}
 		
